@@ -1,0 +1,60 @@
+\# Risk Register — HandmadeHub (Case Study)
+
+
+
+\## Methodology
+
+Risks scored using Probability × Impact matrix (1–5 scale).
+
+Risk Score = Likelihood × Impact. Scores ≥ 12 = High, 6–11 = Medium, ≤ 5 = Low.
+
+
+
+\## Risk Register
+
+
+
+| ID | Risk Description | Category | Likelihood (1-5) | Impact (1-5) | Risk Score | Rating | Mitigation Strategy | Owner | Status |
+
+|---|---|---|---|---|---|---|---|---|---|
+
+| R-001 | Phishing attack leading to credential theft | Cyber | 4 | 5 | 20 | Critical | MFA enforcement, phishing simulation training | IT Security | Open |
+
+| R-002 | Ransomware encrypting customer order data | Cyber | 3 | 5 | 15 | High | Offline backups, EDR deployment, patch management | IT Security | Open |
+
+| R-003 | SQL injection attack on checkout form → attacker exfiltrates customer order data and credentials, causing downtime and reputational damage | Cyber | 3 | 5 | 15 | High | Deploy WAF; enforce parameterized queries / prepared statements; conduct quarterly penetration tests; apply security patches within 72 hrs of release | IT Security | In Progress |
+
+| R-004 | Cloud hosting provider outage → webstore becomes unavailable → lost sales and customer dissatisfaction during peak trading hours | Third-party | 3 | 4 | 12 | High | Select cloud provider with ≥99.9% SLA; configure auto-failover to secondary region; maintain status-page communication plan; subscribe to vendor incident alerts | IT Ops | Open |
+
+| R-005 | Phishing email targets IT Manager → credentials stolen → attacker gains admin access to store backend and modifies product pricing | Cyber | 4 | 4 | 16 | High | Enforce MFA on all admin accounts; conduct phishing awareness training quarterly; implement privileged access management (PAM); review admin audit logs weekly | IT Security | In Progress |
+
+| R-006 | Ransomware infection via malicious plugin → database encrypted → store offline for extended period and order data lost | Cyber | 3 | 5 | 15 | High | Maintain daily automated off-site backups (tested monthly); restrict plugin installation to vetted sources; deploy endpoint EDR on admin machines; isolate database from public-facing tier | IT Security | Open |
+
+| R-007 | Unpatched CMS vulnerability (e.g., outdated Shopify app / WooCommerce plugin) → remote code execution → full site compromise | Cyber | 4 | 5 | 20 | Critical | Enable automatic plugin/CMS updates; subscribe to vendor CVE feeds; run monthly vulnerability scans (e.g., Qualys/Nessus); maintain a staging environment to test patches before production | IT Security | Open — Top Priority |
+
+| R-008 | DDoS attack floods web server → site unavailable during holiday sale → significant revenue loss and customer frustration | Cyber | 3 | 4 | 12 | High | Enable Cloudflare DDoS protection (rate limiting, bot challenge); scale auto-scaling groups in cloud; purchase cyber insurance covering DDoS-related downtime losses | IT Ops | Open |
+
+| R-009 | Payment gateway provider suffers data breach → stored cardholder data (CHD) leaked → PCI-DSS violation, fines up to $500K, and mass customer churn | Third-party | 2 | 5 | 10 | Medium | Use PCI-DSS Level 1 certified payment processor (e.g., Stripe); ensure zero local storage of raw card data; include breach notification SLA in vendor contract; maintain cyber insurance | Finance | Open |
+
+| R-010 | Man-in-the-middle (MitM) attack on payment session → card details intercepted in transit → fraudulent charges on customer accounts | Cyber | 2 | 5 | 10 | Medium | Enforce TLS 1.2+ across all payment pages; configure HSTS headers; implement certificate pinning; use tokenized payment iframe (Stripe Elements) so raw card data never touches HandmadeHub servers | IT Security | In Progress |
+
+| R-011 | Insider threat — Finance team member exports and sells customer card/transaction records → regulatory breach and reputational damage | Insider | 2 | 5 | 10 | Medium | Implement role-based access control (RBAC) — Finance Lead sees summaries, not raw card data; enable audit logging on all data exports; conduct background checks on finance staff; review access quarterly | Finance | Open |
+
+| R-012 | Payment gateway API credentials exposed in public code repository → attacker uses credentials to issue refunds or redirect funds | Cyber | 3 | 5 | 15 | High | Store API keys in environment variables / secrets manager (AWS Secrets Manager); run automated secret-scanning on every code commit (e.g., GitHub Advanced Security / TruffleHog); rotate keys immediately upon any suspected exposure | Finance/IT | Open — Top Priority |
+
+| R-013 | Non-compliance with PCI-DSS due to failure to complete annual SAQ → fines from card brands and loss of ability to accept card payments | Compliance | 2 | 4 | 8 | Medium | Schedule annual PCI-DSS Self-Assessment Questionnaire (SAQ A); engage a Qualified Security Assessor (QSA) for guidance; track compliance calendar in internal risk tracker; assign compliance task to Finance Lead | Finance | Open |
+
+| R-014 | Fraudulent chargebacks spike (friendly fraud) → merchant account suspended by payment processor → inability to accept payments | Fraud | 3 | 4 | 12 | High | Enable fraud detection rules in Stripe Radar; require address/CVV verification on all transactions; maintain chargeback rate below 1%; use dispute management workflow to respond within processor deadline | Finance | Open |
+
+| R-015 | Ransomware encrypts cloud storage containing all product photography → images unavailable on webstore → listings appear broken, halting sales | Cyber | 2 | 4 | 8 | Medium | Enable versioning + Object Lock on S3/Google Drive; maintain separate offline backup copy; restrict storage bucket permissions via IAM; train staff not to click unknown links | Marketing | Open |
+
+| R-016 | Accidental deletion of a product photo library by a marketing intern → images permanently lost with no backup → costly re-shoot required | Operational | 3 | 3 | 9 | Medium | Enable cloud storage versioning with retention; configure Recycle Bin / Soft Delete; require two-approver process before bulk deletions; limit intern permissions | Marketing | In Progress |
+
+| R-017 | Competitor scrapes and reuses HandmadeHub's original product images → brand dilution and potential IP infringement dispute costs | IP/Brand | 4 | 3 | 12 | High | Embed invisible digital watermarks (e.g., Digimarc); add copyright notice; conduct monthly reverse image searches (Google Images / TinEye); register copyright for high-value imagery | Marketing | Open — Top Priority |
+
+| R-018 | Cloud storage provider experiences extended outage → marketing team cannot access or update content → campaign launch delayed and revenue opportunity missed | Third-party | 2 | 3 | 6 | Medium | Select provider with ≥99.9% SLA; maintain local mirror of campaign-critical assets; include SLA breach remedies in vendor agreement | Marketing | Open |
+
+| R-019 | Social media account (Instagram/Pinterest) compromised → attacker posts inappropriate content using HandmadeHub's brand → severe reputational damage and follower loss | Account Security | 3 | 4 | 12 | High | Enable MFA; use social media management tool with role-based access (no shared passwords); set up brand monitoring alerts; establish account-takeover response playbook | Marketing | Open — Top Priority |
+
+| R-020 | Marketing contractor retains access to brand asset folder after contract ends → unauthorized use or sale of proprietary content | Access Control | 3 | 3 | 9 | Medium | Implement offboarding checklist with same-day access revocation; use time-limited guest links; audit shared access monthly; include IP ownership clauses in contractor agreements | Marketing | Open |
+
